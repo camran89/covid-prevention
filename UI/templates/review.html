@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Review | PDA </title>
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!link rel="stylesheet" href="style.css">
+        <style>
+            .login {
+                top: 20%;
+            }
+
+            .card {
+                /* Add shadows to create the "card" effect */
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                transition: 0.3s;
+            }
+
+            /* On mouse-over, add a deeper shadow */
+            .card:hover {
+                box-shadow:
+                    0 8px 16px 0 rgba(0, 0, 0, 0.2);
+            }
+
+            /* Add some padding inside the card container */
+            .container {
+                padding: 2px 16px;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="header">
+        <div>Plasma Donor Application</div>
+        <ul>
+            <li><a href="/requester">Request</a></li>
+            <li><a class="active" href="/">Home</a></li>
+        </ul>
+    </div>
+    <div class="login">
+        <div>
+        </div>
+
+        <!-- Main Input For Receiving Query to our ML -->
+        <form action="{{ url_for('wrotereview')}}" method="post">
+            <p style="font-size: x-small; margin-top: 0; text-align: left;">Default display name is Anonymous</p>
+            <input type="text" name="username" placeholder="Enter Display Name" style="color:black" />
+            <textarea name="review" placeholder="Enter your review here...." required="required" style="color:black"
+                rows="4" cols="47"></textarea>
+            <button type="submit" class="btn btn-primary btn-block btn-large">Submit</button>
+
+        </form>
+        <br><br>
+        <div style="color:black">
+            {{ pred }}</div>
+        {%if pastreview%}
+        <div class="card">
+            <!--add source and class-->
+            <div class="card-body">
+                <!-- Keep class names relative to what you are doing-->
+                <h5 class="card-title">Past review</h5>
+                <p style="font-size: x-small; margin-top: 0; text-align: left;">Posted on: {{pastreview['date']}}</p>
+                <form action="{{ url_for('handleupdates')}}" method="post">
+                    <input type="hidden" name="username" value={{pastreview['username']}} />
+                    <input type="hidden" name="id" value={{pastreview['id']}} />
+                    <textarea name="review" placeholder="Enter your review here...." required="required" style="color:black"
+                        rows="4" cols="47" >{{pastreview['review']}}</textarea>
+                    <button type="submit" class="btn btn-primary btn-large" style="width: 150px;" name="action" value="Update">Update</button>
+                    <button type="submit" class="btn btn-primary btn-large" style="width: 150px;" name="action" value="Delete">Delete</button>
+                </form>
+                <!-- Add link
+               with href and put text for button in-->
+            </div>
+        </div>
+        {%endif%}
+    </div>
+
+
+</body>
+
+</html>
